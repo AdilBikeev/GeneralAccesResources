@@ -15,7 +15,7 @@ namespace ConsoleApp.Interfaces
         /// Записывает число в файл.
         /// </summary>
         /// <param name="num"></param>
-        void WriteNum(int num);
+        void WriteNum();
 
         /// <summary>
         /// Считывает последнии 2 цифры в файле.

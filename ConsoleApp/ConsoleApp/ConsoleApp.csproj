@@ -46,7 +46,10 @@
   <ItemGroup>
     <Compile Include="Hellpers\TaskHellper.cs" />
     <Compile Include="Interfaces\IFileOperation.cs" />
+    <Compile Include="Interfaces\IThreadOperation.cs" />
+    <Compile Include="Models\BaseThreadExecutive.cs" />
     <Compile Include="Models\FileNum.cs" />
+    <Compile Include="Models\FirstThreadExecutive.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

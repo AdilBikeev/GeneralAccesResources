@@ -7,7 +7,7 @@ using System.Windows.Threading;
 
 namespace ConsoleApp.Hellpers
 {
-    class TaskHellper
+    public class TaskHellper
     {
         private Action TargetMethod { get; set; }
 
