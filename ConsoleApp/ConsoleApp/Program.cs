@@ -11,8 +11,28 @@ namespace ConsoleApp
 {
     class Program
     {
-        void Main(string[] args)
+        static FirstThreadExecutive firstThread;
+        static SecondThreadExecutive secondThread;
+        static ThirdThreadExecutive thirdThread;
+
+        static void Init()
         {
+            firstThread = new FirstThreadExecutive();
+            secondThread = new SecondThreadExecutive();
+            thirdThread = new ThirdThreadExecutive();
+        }
+
+        static void Start()
+        {
+            firstThread.Execute();
+            secondThread.Execute();
+            thirdThread.Execute();
+        }
+
+        static void Main(string[] args)
+        {
+            Init();
+            Start();
         }
     }
 }
