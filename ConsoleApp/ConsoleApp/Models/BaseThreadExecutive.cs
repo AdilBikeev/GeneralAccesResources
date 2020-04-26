@@ -21,7 +21,12 @@ namespace ConsoleApp.Models
         /// <summary>
         /// Частота запуска метода Execute.
         /// </summary>
-        protected int freeqWExecute;
+        protected int freeqExecute;
+
+        /// <summary>
+        /// Файл 1.
+        /// </summary>
+        protected FileNum text_1 = new FileNum(nameof(text_1));
 
         /// <inheritdoc/>
         public abstract void Execute();

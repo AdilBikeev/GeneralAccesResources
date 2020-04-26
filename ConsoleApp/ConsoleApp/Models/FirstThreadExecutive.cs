@@ -19,17 +19,11 @@ namespace ConsoleApp.Models
         private Random random = new Random();
 
         /// <summary>
-        /// Файл для записи в него случайных чисел.
-        /// </summary>
-        FileNum text_1 = new FileNum(nameof(text_1));
-
-        /// <summary>
         /// Запускает Поток 1.
         /// </summary>
         public FirstThreadExecutive()
         {
-            this.thread.StartTimer(this.Execute, freeqWExecute);
-            this.freeqWExecute = 1000;
+            this.freeqExecute = 1000;
         }
 
         /// <inheritdoc/>

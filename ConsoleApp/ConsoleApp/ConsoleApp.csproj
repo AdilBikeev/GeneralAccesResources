@@ -50,6 +50,7 @@
     <Compile Include="Models\BaseThreadExecutive.cs" />
     <Compile Include="Models\FileNum.cs" />
     <Compile Include="Models\FirstThreadExecutive.cs" />
+    <Compile Include="Models\SecondThreadExecutive.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
