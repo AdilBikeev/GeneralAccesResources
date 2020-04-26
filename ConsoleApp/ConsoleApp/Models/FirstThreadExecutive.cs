@@ -19,6 +19,16 @@ namespace ConsoleApp.Models
         private Random random = new Random();
 
         /// <summary>
+        /// Минимальное значение, клторое может сгенерирвоать рандом.
+        /// </summary>
+        private readonly int minValue = 1;
+
+        /// <summary>
+        /// Максимальное значение, клторое может сгенерирвоать рандом.
+        /// </summary>
+        private readonly int maxValue = 20;
+
+        /// <summary>
         /// Запускает Поток 1.
         /// </summary>
         public FirstThreadExecutive()
@@ -27,6 +37,11 @@ namespace ConsoleApp.Models
         }
 
         /// <inheritdoc/>
-        public override void Execute() => text_1.WriteNum(random.Next());
+        public override void Execute()
+        {
+            int num = random.Next(minValue, maxValue);
+            text_1.WriteNum(num);
+            Console.WriteLine($"Поток #1 записал в {this.text_1.FileName} число {num}");
+        }
     }
 }

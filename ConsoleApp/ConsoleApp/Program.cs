@@ -11,11 +11,6 @@ namespace ConsoleApp
 {
     class Program
     {
-        /// <summary>
-        /// Объект для синхронизации потоков.
-        /// </summary>
-        /// static Mutex mutex = new Mutex();
-
         void Main(string[] args)
         {
         }

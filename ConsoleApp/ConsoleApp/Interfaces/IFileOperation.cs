@@ -14,13 +14,13 @@ namespace ConsoleApp.Interfaces
         /// <summary>
         /// Записывает число в файл.
         /// </summary>
-        /// <param name="num"></param>
-        void WriteNum();
+        /// <param name="num">Число, которое нужно записать в файл.</param>
+        void WriteNum(int num);
 
         /// <summary>
         /// Считывает последнии 2 цифры в файле.
         /// </summary>
-        /// <returns>Возвращает сумму считанных цифр.</returns>
-        int ReadTwoLastNum();
+        /// <returns>Возвращает 2 последнии цифры.</returns>
+        (int, int) ReadTwoLastNum();
     }
 }

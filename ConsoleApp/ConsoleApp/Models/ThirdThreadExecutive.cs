@@ -20,7 +20,7 @@ namespace ConsoleApp.Models
 
         public ThirdThreadExecutive()
         {
-            this.freeqExecute = 1500;
+            this.freeqExecute = 100;
         }
 
         /// <summary>
@@ -28,8 +28,14 @@ namespace ConsoleApp.Models
         /// </summary>
         public override void Execute()
         {
-            int num = this.text_2.ReadTwoLastNum();
-            this.text_1.WriteNum(num);
+            var nums = this.text_2.ReadTwoLastNum();
+
+            if (nums.Item1 != 0 && nums.Item2 != 0)
+            {
+                int sum = nums.Item1 + nums.Item2;
+                this.text_1.WriteNum(sum);
+                Console.WriteLine($"Поток #3 записал в {this.text_1.FileName} сумму двух последних цифр из файла {this.text_2.FileName} {nums.Item1} + {nums.Item2} = {sum}");
+            }
         }
     }
 }

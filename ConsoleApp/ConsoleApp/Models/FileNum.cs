@@ -13,7 +13,7 @@ namespace ConsoleApp.Models
         /// <summary>
         /// Имя файла.
         /// </summary>
-        private string FileName { get; set; }
+        public string FileName { get; private set; }
 
         /// <summary>
         /// Полный путь к файлу.
@@ -36,7 +36,6 @@ namespace ConsoleApp.Models
         /// <inheritdoc/>
         public void WriteNum(int num)
         {
-
             try
             {
                 using (FileStream fs = File.Open(this.FullPath, FileMode.Append, FileAccess.Write, FileShare.Write))
@@ -52,7 +51,7 @@ namespace ConsoleApp.Models
         }
 
         /// <inheritdoc/>
-        public int ReadTwoLastNum()
+        public (int, int) ReadTwoLastNum()
         {
             int last = 0, preLast = last;
 
@@ -66,7 +65,10 @@ namespace ConsoleApp.Models
                     string[] rowsFromFile = Encoding.Default.GetString(info).Split('\n');
 
                     /// Если в файле есть хотяб 2 числа
-                    if (rowsFromFile.Length > 1)
+                    /// 2 числа новые
+                    if (rowsFromFile.Length > 1 && 
+                        ((rowsFromFile.Length % 2) == 0)
+                        )
                     {
                         int lastIndex = rowsFromFile.Length;
                         last = int.Parse(rowsFromFile[--lastIndex]);
@@ -79,7 +81,7 @@ namespace ConsoleApp.Models
                 Console.WriteLine($"ReadTwoLastNum Exception[{Task.CurrentId}]: {exc.Message}");
             }
 
-            return last + preLast;
+            return (last, preLast);
         }
     }
 }
