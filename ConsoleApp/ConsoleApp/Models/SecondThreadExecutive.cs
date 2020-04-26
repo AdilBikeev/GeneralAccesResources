@@ -14,11 +14,6 @@ namespace ConsoleApp.Models
     /// </summary>
     public class SecondThreadExecutive : BaseThreadExecutive
     {
-        /// <summary>
-        /// Файл 2.
-        /// </summary>
-        FileNum text_2 = new FileNum(nameof(text_2));
-
         public SecondThreadExecutive()
         {
             this.freeqExecute = 0;
@@ -29,13 +24,16 @@ namespace ConsoleApp.Models
         /// </summary>
         public override void Execute()
         {
-            var nums = this.text_1.ReadTwoLastNum();
-
-            if(nums.Item1 != 0 && nums.Item2 != 0)
+            if(Program.text_1.CountNewRow > 1)
             {
-                int sum = nums.Item1 + nums.Item2;
-                this.text_2.WriteNum(sum);
-                Console.WriteLine($"Поток #2 записал в {this.text_2.FileName} сумму двух последних цифр из файла {this.text_1.FileName} {nums.Item1} + {nums.Item2} = {sum}");
+                var nums = Program.text_1.ReadTwoLastNum();
+
+                if(nums.Item1 != 0 && nums.Item2 != 0)
+                {
+                    int sum = nums.Item1 + nums.Item2;
+                    Program.text_2.WriteNum(sum);
+                    Console.WriteLine($"Поток #2 записал в {Program.text_2.FileName} сумму двух последних цифр из файла {Program.text_1.FileName} {nums.Item1} + {nums.Item2} = {sum}");
+                }
             }
         }
     }

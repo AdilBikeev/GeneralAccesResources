@@ -9,9 +9,19 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp
 {
-    class Program
+    public static class Program
     {
         static List<BaseThreadExecutive> threads;
+
+        /// <summary>
+        /// Файл 1.
+        /// </summary>
+        public static FileNum text_1 = new FileNum(nameof(text_1));
+
+        /// <summary>
+        /// Файл 2.
+        /// </summary>
+        public static FileNum text_2 = new FileNum(nameof(text_2));
 
         static void Init()
         {

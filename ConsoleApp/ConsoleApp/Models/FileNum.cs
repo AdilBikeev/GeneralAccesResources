@@ -16,6 +16,12 @@ namespace ConsoleApp.Models
         private Mutex mutex = new Mutex();
 
         /// <summary>
+        /// Кол-во новых строк, после чтения из них двух последних цифр.
+        /// Требуется для обнуления и использования в качестве сигнала записи в следующий файл.
+        /// </summary>
+        public int CountNewRow { get; private set; } = 0;
+
+        /// <summary>
         /// Имя файла.
         /// </summary>
         public string FileName { get; private set; }
@@ -43,13 +49,13 @@ namespace ConsoleApp.Models
         {
             try
             {
-                mutex.WaitOne();
                 using (FileStream fs = File.Open(this.FullPath, FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
                 {
                     byte[] info = new UTF8Encoding().GetBytes(num.ToString() + "\n");
                     fs.Write(info, 0, info.Length);
                 }
-               mutex.ReleaseMutex();
+                
+                this.CountNewRow++;
             }
             catch (Exception exc)
             {
@@ -64,7 +70,6 @@ namespace ConsoleApp.Models
 
             try
             {
-                //mutex.WaitOne();
                 /// Открываем файл с возможностью одновременного доступа нескольких потоков
                 using (FileStream fs = File.Open(this.FullPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 {
@@ -72,18 +77,12 @@ namespace ConsoleApp.Models
                     fs.Read(info, 0, info.Length);
                     string[] rowsFromFile = Encoding.Default.GetString(info).Trim().Split('\n');
 
-                    /// Если в файле есть хотяб 2 числа
-                    /// 2 числа новые
-                    if (rowsFromFile.Length > 1 && 
-                        ((rowsFromFile.Length % 2) == 0)
-                        )
-                    {
-                        int lastIndex = rowsFromFile.Length;
-                        last = int.Parse(rowsFromFile[--lastIndex]);
-                        preLast = int.Parse(rowsFromFile[--lastIndex]);
-                    }
+                    int lastIndex = rowsFromFile.Length;
+                    last = int.Parse(rowsFromFile[--lastIndex]);
+                    preLast = int.Parse(rowsFromFile[--lastIndex]);
+
+                    this.CountNewRow = 0;
                 }
-                //mutex.ReleaseMutex();
             }
             catch (Exception exc)
             {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
@@ -21,13 +22,12 @@ namespace ConsoleApp.Hellpers
         {
             TargetMethod = func;
 
-            DispatcherTimer timer = new DispatcherTimer();
             Task.Factory.StartNew(() =>
             {
                 while (true)
                 {
                     this.TargetMethod();
-                    Task.Delay(ms);
+                    Thread.Sleep(ms);
                 }
             });
         }
