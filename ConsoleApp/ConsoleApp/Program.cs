@@ -11,28 +11,35 @@ namespace ConsoleApp
 {
     class Program
     {
-        static FirstThreadExecutive firstThread;
-        static SecondThreadExecutive secondThread;
-        static ThirdThreadExecutive thirdThread;
+        static List<BaseThreadExecutive> threads;
 
         static void Init()
         {
-            firstThread = new FirstThreadExecutive();
-            secondThread = new SecondThreadExecutive();
-            thirdThread = new ThirdThreadExecutive();
+            threads = new List<BaseThreadExecutive>()
+            {
+                new ThirdThreadExecutive(),
+                new SecondThreadExecutive(),
+                new FirstThreadExecutive()
+            };
         }
 
         static void Start()
         {
-            firstThread.Execute();
-            secondThread.Execute();
-            thirdThread.Execute();
+            foreach (var thread in threads)
+            {
+               thread.StartThread();
+            }
         }
 
         static void Main(string[] args)
         {
             Init();
             Start();
+
+            while (Console.ReadKey().Key != ConsoleKey.Enter)
+            {
+
+            }
         }
     }
 }

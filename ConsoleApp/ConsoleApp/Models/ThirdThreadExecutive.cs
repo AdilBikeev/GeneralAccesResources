@@ -20,7 +20,7 @@ namespace ConsoleApp.Models
 
         public ThirdThreadExecutive()
         {
-            this.freeqExecute = 100;
+            this.freeqExecute = 0;
         }
 
         /// <summary>

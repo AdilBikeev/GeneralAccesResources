@@ -21,7 +21,7 @@ namespace ConsoleApp.Models
 
         public SecondThreadExecutive()
         {
-            this.freeqExecute = 100;
+            this.freeqExecute = 0;
         }
 
         /// <summary>

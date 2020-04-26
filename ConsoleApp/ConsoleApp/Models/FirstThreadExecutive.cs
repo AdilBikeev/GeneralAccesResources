@@ -39,7 +39,7 @@ namespace ConsoleApp.Models
         /// <inheritdoc/>
         public override void Execute()
         {
-            int num = random.Next(minValue, maxValue);
+            int num = random.Next(minValue, maxValue) % maxValue;
             text_1.WriteNum(num);
             Console.WriteLine($"Поток #1 записал в {this.text_1.FileName} число {num}");
         }

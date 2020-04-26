@@ -28,6 +28,11 @@ namespace ConsoleApp.Models
         /// </summary>
         protected FileNum text_1 = new FileNum(nameof(text_1));
 
+        /// <summary>
+        /// Запускает работу потока.
+        /// </summary>
+        public void StartThread() => this.thread.StartTimer(this.Execute, this.freeqExecute);
+
         /// <inheritdoc/>
         public abstract void Execute();
     }

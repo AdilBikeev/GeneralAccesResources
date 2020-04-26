@@ -22,11 +22,14 @@ namespace ConsoleApp.Hellpers
             TargetMethod = func;
 
             DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = new TimeSpan(0, 0, 0, 0, ms);
-            timer.Tick += Timer_Tick;
-            timer.Start();
+            Task.Factory.StartNew(() =>
+            {
+                while (true)
+                {
+                    this.TargetMethod();
+                    Task.Delay(ms);
+                }
+            });
         }
-
-        private void Timer_Tick(object sender, EventArgs e) => this.TargetMethod();
     }
 }

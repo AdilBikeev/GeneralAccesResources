@@ -4,12 +4,17 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ConsoleApp.Models
 {
     public class FileNum: IFileOperation
     {
+        private readonly string Extension = "txt";
+
+        private Mutex mutex = new Mutex();
+
         /// <summary>
         /// Имя файла.
         /// </summary>
@@ -30,7 +35,7 @@ namespace ConsoleApp.Models
         /// <param name="fileName">Имя файла.</param>
         public FileNum(string fileName)
         {
-            this.FileName = fileName;
+            this.FileName = $"{fileName}.{this.Extension}";
         }
 
         /// <inheritdoc/>
@@ -38,15 +43,17 @@ namespace ConsoleApp.Models
         {
             try
             {
-                using (FileStream fs = File.Open(this.FullPath, FileMode.Append, FileAccess.Write, FileShare.Write))
+                mutex.WaitOne();
+                using (FileStream fs = File.Open(this.FullPath, FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
                 {
-                    byte[] info = new UTF8Encoding().GetBytes(num.ToString());
+                    byte[] info = new UTF8Encoding().GetBytes(num.ToString() + "\n");
                     fs.Write(info, 0, info.Length);
                 }
+               mutex.ReleaseMutex();
             }
             catch (Exception exc)
             {
-                Console.WriteLine($"WriteNum Exception[{Task.CurrentId}]: {exc.Message}");
+                Console.WriteLine($"WriteNum Exception[{Task.CompletedTask.Id}]: {exc.Message}");
             }
         }
 
@@ -57,12 +64,13 @@ namespace ConsoleApp.Models
 
             try
             {
+                //mutex.WaitOne();
                 /// Открываем файл с возможностью одновременного доступа нескольких потоков
-                using (FileStream fs = File.Open(this.FullPath, FileMode.Open, FileAccess.Read, FileShare.Write))
+                using (FileStream fs = File.Open(this.FullPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 {
                     byte[] info = new byte[fs.Length];
                     fs.Read(info, 0, info.Length);
-                    string[] rowsFromFile = Encoding.Default.GetString(info).Split('\n');
+                    string[] rowsFromFile = Encoding.Default.GetString(info).Trim().Split('\n');
 
                     /// Если в файле есть хотяб 2 числа
                     /// 2 числа новые
@@ -75,6 +83,7 @@ namespace ConsoleApp.Models
                         preLast = int.Parse(rowsFromFile[--lastIndex]);
                     }
                 }
+                //mutex.ReleaseMutex();
             }
             catch (Exception exc)
             {
